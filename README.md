@@ -7,3 +7,6 @@ AlgoScope is a web-based tool built with Next.js and TypeScript, designed to hel
 - Performance Metrics: Real-time tracking of sorting time to evaluate algorithm efficiency.
 - Interactive Interface: Input custom data sets and observe sorting performance.
 - Randomized Bar Graph: Generate randomized data sets for sorting algorithms to test performance on different scenarios.
+
+
+Link - https://algo-scope-qxldd4z4g-dsmita03s-projects.vercel.app/
