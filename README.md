@@ -9,4 +9,4 @@ AlgoScope is a web-based tool built with Next.js and TypeScript, designed to hel
 - Randomized Bar Graph: Generate randomized data sets for sorting algorithms to test performance on different scenarios.
 
 
-Link - https://algo-scope-qxldd4z4g-dsmita03s-projects.vercel.app/
+ 
