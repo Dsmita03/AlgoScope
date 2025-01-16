@@ -14,9 +14,8 @@ export default function Home() {
       active: false,
     },
   ]);
-  const [Sorting, setSorting] = useState(false)
-  const [timetosort, setTimetosort] = useState(0)
-
+  const [Sorting, setSorting] = useState(false);
+  const [timetosort, setTimetosort] = useState(0);
 
   useEffect(() => {
     let newArray = Array.from({ length: number_of_bars }, (_, index) => ({
@@ -30,7 +29,6 @@ export default function Home() {
     setSampleArray((s) => (s.length > 1 ? randomizeArray([...s]) : s));
   };
 
-  
   function randomizeArray(
     array: { height: number; active: boolean }[]
   ): { height: number; active: boolean }[] {
@@ -42,10 +40,11 @@ export default function Home() {
   }
 
 
+  //  Bubble Sort
   function bubbleSortByHeight() {
     let arr = [...sampleArray];
-    const date1 = Date.now()
-    setTimetosort(0)
+    const date1 = Date.now();
+    setTimetosort(0);
 
     const n = arr.length;
     let i = 0;
@@ -54,7 +53,7 @@ export default function Home() {
     const sortStep = () => {
       arr.forEach((bar) => (bar.active = false));
       if (i < n - 1) {
-        setSorting(s => s == false ? true : true)
+        setSorting((s) => (s == false ? true : true));
         if (j < n - i - 1) {
           arr[j].active = true;
           arr[j + 1].active = true;
@@ -74,18 +73,18 @@ export default function Home() {
           j = 0;
           setTimeout(sortStep, time);
         }
-      }
-      else{
-        setTimetosort(Date.now() - date1)
-        setSorting(s => s == true ? false : false)
+      } else {
+        setTimetosort(Date.now() - date1);
+        setSorting((s) => (s == true ? false : false));
       }
     };
     sortStep();
   }
 
+  //  Selection Sort
   function selectionSortByHeight() {
-    const date1 = Date.now()
-    setTimetosort(0)
+    const date1 = Date.now();
+    setTimetosort(0);
     let arr = [...sampleArray];
 
     const n = arr.length;
@@ -97,7 +96,7 @@ export default function Home() {
 
       if (i < n - 1) {
         let minIndex = i;
-        setSorting(s => s == false ? true : true)
+        setSorting((s) => (s == false ? true : true));
 
         if (j < n) {
           arr[i].active = true;
@@ -108,25 +107,112 @@ export default function Home() {
             arr[j] = arr[minIndex];
             arr[minIndex] = temp;
           }
-          
+
           setSampleArray([...arr]);
           j++;
           setTimeout(sortStep, time);
-        } else {          
+        } else {
           i++;
           j = i + 1;
           setTimeout(sortStep, time);
         }
-      }
-      else{
-        setTimetosort(Date.now() - date1)
-        setSorting(s => s == true ? false : false)
+      } else {
+        setTimetosort(Date.now() - date1);
+        setSorting((s) => (s == true ? false : false));
       }
     };
 
     sortStep();
   }
+
+  //  Insertion Sort
+  function insertionSortByHeight() {
+    const date1 = Date.now();
+    setTimetosort(0);
+    let arr = [...sampleArray];
+
+    const n = arr.length;
+    let i = 1;
+
+    const sortStep = () => {
+      arr.forEach((bar) => (bar.active = false));
+
+      if (i < n) {
+        setSorting((s) => (s == false ? true : true));
+        let key = arr[i];
+        let j = i - 1;
+
+        while (j >= 0 && arr[j].height > key.height) {
+          arr[j + 1] = arr[j];
+          j--;
+        }
+        arr[j + 1] = key;
+
+        arr[i].active = true;
+        arr[j + 1].active = true;
+
+        setSampleArray([...arr]);
+        i++;
+        setTimeout(sortStep, time);
+      } else {
+        setTimetosort(Date.now() - date1);
+        setSorting((s) => (s == true ? false : false));
+      }
+    };
+
+    sortStep();
+  }
+
+
+  // Merge Sort
+
+  function mergeSortByHeight() {
+    const date1 = Date.now();
+    setTimetosort(0);
+    setSorting(true);
   
+    let arr = [...sampleArray];
+  
+    function merge(left: any[], right: any[]) {
+      let resultArray = [];
+      let leftIndex = 0;
+      let rightIndex = 0;
+  
+      while (leftIndex < left.length && rightIndex < right.length) {
+        if (left[leftIndex].height < right[rightIndex].height) {
+          resultArray.push(left[leftIndex]);
+          leftIndex++;
+        } else {
+          resultArray.push(right[rightIndex]);
+          rightIndex++;
+        }
+      }
+  
+      return resultArray
+        .concat(left.slice(leftIndex))
+        .concat(right.slice(rightIndex));
+    }
+  
+    function mergeSort(array: any[]): any[] {
+      if (array.length <= 1) {
+        return array;
+      }
+  
+      const middleIndex = Math.floor(array.length / 2);
+      const leftArray = array.slice(0, middleIndex);
+      const rightArray = array.slice(middleIndex);
+  
+      return merge(mergeSort(leftArray), mergeSort(rightArray));
+    }
+  
+    const sortedArray = mergeSort(arr);
+    setSampleArray(sortedArray);
+    setSorting(false);
+    setTimetosort(Date.now() - date1);
+  }
+
+  
+
   return (
     <>
       <div className="flex w-full h-full">
@@ -137,6 +223,8 @@ export default function Home() {
           setTime={setTime}
           bubbleSort={bubbleSortByHeight}
           selectionSort={selectionSortByHeight}
+          insertionSort={insertionSortByHeight}
+          mergeSort={mergeSortByHeight}
           randomButton={randomButton}
           number_of_bars={number_of_bars}
           setNumber_of_bars={setNumber_of_bars}
