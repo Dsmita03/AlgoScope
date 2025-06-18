@@ -7,6 +7,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import type { Chart as ChartJSInstance } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useRef } from 'react';
 
@@ -17,7 +18,8 @@ type SortChartProps = {
 };
 
 const SortChart = ({ times }: SortChartProps) => {
-  const chartRef = useRef<any>(null);
+const chartRef = useRef<ChartJSInstance<'bar'> | null>(null);
+
 
   const data = {
     labels: times.map((item) => item.name),
@@ -46,48 +48,59 @@ const SortChart = ({ times }: SortChartProps) => {
   };
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        labels: {
-          color: '#e5e7eb',
-          font: { size: 13, weight: 'bold' },
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      labels: {
+        color: '#e5e7eb',
+        font: { size: 13, weight: 'bold' as const  },
+      },
+    },
+    title: {
+      display: false,
+    },
+    tooltip: {
+      backgroundColor: '#1f2937',
+      titleColor: '#818cf8',
+      bodyColor: '#f9fafb',
+      cornerRadius: 8,
+      padding: 10,
+      bodyFont: { weight: 'bold' as const  },
+    },
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#d1d5db',
+        font: {
+          size: 13,
+          weight: 500,
         },
       },
-      title: {
+      grid: {
         display: false,
       },
-      tooltip: {
-        backgroundColor: '#1f2937',
-        titleColor: '#818cf8',
-        bodyColor: '#f9fafb',
-        cornerRadius: 8,
-        padding: 10,
-        bodyFont: { weight: 'bold' },
-      },
     },
-    scales: {
-      x: {
-        ticks: {
-          color: '#d1d5db',
-          font: { size: 13, weight: '500' },
+    y: {
+      beginAtZero: true,
+      ticks: {
+        color: '#d1d5db',
+        font: {
+          size: 13,
+          weight: 500,
         },
-        grid: { display: false },
       },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          color: '#d1d5db',
-          font: { size: 13, weight: '500' },
-        },
-        grid: {
-          color: '#374151',
-          borderDash: [6, 4],
+      grid: {
+        color: '#374151',
+        border: {
+          dash: [6, 4],
         },
       },
     },
-  };
+  },
+};
+
 
   const handleDownloadImage = () => {
     if (chartRef.current) {
