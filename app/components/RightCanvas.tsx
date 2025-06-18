@@ -1,24 +1,28 @@
-// import { useEffect } from "react"
-import Bar from "./Bar"
+import Bar from "./Bar";
 
-type props = {
-    bars: {
-        height: number,
-        active: boolean
-    }[]
-}
+type BarType = {
+  height: number;
+  active: boolean;
+};
 
-const RightCanvas = ({bars}: props) => {
-    
+type Props = {
+  bars: BarType[];
+};
+
+const RightCanvas = ({ bars }: Props) => {
   return (
-    <>
-        <div className="w-3/4 h-screen bg-gray-950 p-10 flex">
-            {bars && bars.map((bar, index) => {
-                return <Bar key={index} height={bar.height} active={bar.active}/>
-            })}
-        </div>
-    </>
-  )
-}
+    <div className="w-full md:w-3/4 h-screen bg-gray-950 p-4 sm:p-6 flex items-end justify-center overflow-x-auto overflow-y-hidden">
+      <div className="flex items-end h-full gap-[1px] w-fit min-w-full">
+        {bars.map((bar, index) => (
+          <Bar
+            key={index} // Use a unique key if possible
+            height={bar.height}
+            active={bar.active}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
-export default RightCanvas
+export default RightCanvas;

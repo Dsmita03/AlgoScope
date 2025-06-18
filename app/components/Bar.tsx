@@ -1,13 +1,25 @@
-type props = {
-  height: number,
-  active: boolean
-}
+// Bar.tsx
+type BarProps = {
+  height: number;
+  active?: boolean;
+  sorted?: boolean;
+  comparing?: boolean;
+};
 
-const Bar = ({height, active}: props) => {
-return (
-  <div style={{height: `${height}%`}} className={`w-full mx-0.5 mt-auto rounded-sm ${active ? "bg-green-500" : "bg-gray-500"}`}>
-  </div>
-)
-}
+const Bar = ({ height, active, sorted, comparing }: BarProps) => {
+  let barColor = 'bg-blue-500';
 
-export default Bar
+  if (comparing) barColor = 'bg-yellow-400';
+  else if (active) barColor = 'bg-red-500';
+  else if (sorted) barColor = 'bg-green-500';
+
+  return (
+    <div
+      className={`flex-1 mx-0.5 ${barColor} rounded-t transition-all duration-300 ease-in-out`}
+      style={{ height: `${height}%`, minWidth: '4px' }} // Ensures visibility on mobile
+      aria-label={`Bar height: ${height}`}
+    />
+  );
+};
+
+export default Bar;
