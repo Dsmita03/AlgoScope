@@ -28,8 +28,8 @@ Try it live: [algo-scope.vercel.app](https://algo-scope.vercel.app)
 
 ## 📸 Screenshots
 
-> *(Add screenshots or GIFs of animations and the performance chart here for visual appeal)*
-
+><h4>AlgoScope</h4>
+<img src="snap/snap1.png" alt="Home page" width="800">
 ---
 
 ## 📦 Tech Stack
